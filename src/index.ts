@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import { ClinicsResolver } from "./entities/Clinics";
+import { ClinicsResolver } from "./entities/Clinic";
 
 const main = async () => {
   

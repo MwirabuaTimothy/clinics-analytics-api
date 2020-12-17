@@ -1,0 +1,19 @@
+{
+  "name": "clinics-analytics-api",
+  "version": "1.0.0",
+  "description": "Analytics platform to help in the measurement and optimization of key metrics that can improve the operational efficiency of clinic staff",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/timtruston/clinics-analytics-api.git"
+  },
+  "author": "@TimTruston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timtruston/clinics-analytics-api/issues"
+  },
+  "homepage": "https://github.com/timtruston/clinics-analytics-api#readme"
+}

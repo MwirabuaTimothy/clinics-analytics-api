@@ -1,30 +1,36 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
-    "sourceMap": true,
+    "target": "es2019", // ECMAScript target version
+    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"], //  Library files to be included in the compilation
+    "allowJs": true, // Allow JavaScript files to be compiled
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
+    "module": "commonjs", // Specify module code generation
+    "moduleResolution": "node", // Resolve modules using Node.js style
+    "resolveJsonModule": true, // Include modules imported with .json extension
+    "noEmit": true, // Do not emit output (meaning do not compile code, only perform type checking)
+    "sourceMap": true, // Generate corrresponding .map file
     "outDir": "./dist",
-    "moduleResolution": "node",
-    "declaration": false,
+    "declaration": false, // Generate corresponding .d.ts file 
     "composite": false,
     "removeComments": true,
     "noImplicitAny": true,
+    "strict": true, // Enable all strict type checking options
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": true, // Report errors on unused locals
+    "noUnusedParameters": true, // Report errors on unused parameters
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
+    "esModuleInterop": true, // Disables namespace imports (import * as fs from "fs") and enables CJS/AMD/UMD style imports (import fs from "fs")
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
+    "experimentalDecorators": true, // Enables experimental support for ES decorators
+    "skipLibCheck": true, // Skip type checking of all declaration files
+    "incremental": true, // Enable incremental compilation by reading/writing information from prior compilations to a file on disk
     "baseUrl": ".",
     "rootDir": "src"
   },
-  "exclude": ["node_modules"],
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"]
+  "exclude": ["node_modules"], // *** The files to not type check ***
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"] // *** The files TypeScript should type check ***
 }

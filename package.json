@@ -6,8 +6,8 @@
   "scripts": {
     "start": "nodemon ./src/index.ts",
     "build": "tsc --project ./tsconfig.json",
-    "test": "jest -c ./jest.unit.json",
-    "test:coverage": "jest --coverage -c ./jest.unit.json"
+    "test": "jest -c ./jest.config.json",
+    "test:coverage": "jest --coverage -c ./jest.config.json"
   },
   "repository": {
     "type": "git",

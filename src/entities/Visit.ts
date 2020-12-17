@@ -1,7 +1,11 @@
 import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Clinic } from "./Clinic";
 import { Issue } from "./Issue";
+
+import * as Faker from "faker"
+import { define } from "typeorm-seeding"
+
 
 @ObjectType()
 @Entity()
@@ -27,10 +31,16 @@ export class Visit extends BaseEntity{
   @Column("integer")
   promoter_score!: number
   
-  @OneToOne(_type => Clinic) @JoinColumn() 
+  @Column({ type: "int", nullable: true })
+  clinicId!: number;
+  
+  @ManyToOne(() => Clinic, clinic => clinic.visits) 
   clinic!: Clinic;
   
-  @OneToOne(_type => Issue) @JoinColumn() 
+  @Column({ type: "int", nullable: true })
+  issueId!: number;
+
+  @ManyToOne(() => Issue, issue => issue.visits) 
   issue!: Issue;
 }
 
@@ -47,19 +57,22 @@ export class VisitsResolver {
       @Arg('time') time: string,
       @Arg('fee') fee: number, 
       @Arg('promoter_score') promoter_score: number,
-      @Arg('clinic_id') clinic_id: number, 
-      @Arg('issue_id') issue_id: number
+      @Arg('clinicId') clinicId: number, 
+      @Arg('issueId') issueId: number
     ){
-      
-      let clinic = await Clinic.findOne(clinic_id);
-      let issue = await Issue.findOne(issue_id);
-      if(!clinic){
-        throw new Error(`Clinic ${clinic_id} not found!`);
-      }
-      if(!issue){
-        throw new Error(`Issue ${issue_id} not found!`);
-      }
-
-      return Visit.create({ patient, time, fee, promoter_score, clinic, issue }).save()
+      return Visit.create({ patient, time, fee, promoter_score, clinicId, issueId }).save()
   }
 }
+
+// user.factory.ts
+define(Visit, (faker: typeof Faker) => {
+  const visit = new Visit()
+  const gender = faker.random.number(1)
+  visit.patient = faker.name.firstName(gender) + ' ' + faker.name.lastName(gender)
+  visit.time = faker.date.between('2019-12-01', '2020-12-01').toDateString()
+  visit.fee = (Math.floor(Math.random() * 40)*50) + 500
+  visit.promoter_score = Math.floor(Math.random() * 5) + 6
+  visit.clinicId = Math.floor(Math.random() * 6) + 1
+  visit.issueId = Math.floor(Math.random() * 6) + 1
+  return visit
+})

@@ -1,5 +1,6 @@
 import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Visit } from "./Visit";
 
 @ObjectType()
 @Entity()
@@ -17,6 +18,9 @@ export class Clinic extends BaseEntity{
   @Column("text")
   location!: string
 
+  @OneToMany(() => Visit, visit => visit.clinic)
+  visits!: Visit[]
+  
 }
 
 @Resolver()

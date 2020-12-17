@@ -28,6 +28,10 @@ export default class ClinicsSeeder implements Seeder {
         { 
           name: "Kosovo",
           location: 'Kenya'
+        },
+        { 
+          name: "Mukuru Kayaba",
+          location: 'Kenya'
         }
       ])
       .execute()

@@ -3,11 +3,12 @@ import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import { ClinicsResolver } from "./entities/Clinic";
+import { IssuesResolver } from "./entities/Issue";
 
 const main = async () => {
   
   const schema = await buildSchema({
-    resolvers: [ClinicsResolver]
+    resolvers: [ClinicsResolver, IssuesResolver]
   });
 
   const apolloServer = new ApolloServer({schema})

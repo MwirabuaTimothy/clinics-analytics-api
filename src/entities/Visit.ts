@@ -1,5 +1,7 @@
 import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+import { Clinic } from "./Clinic";
+import { Issue } from "./Issue";
 
 @ObjectType()
 @Entity()
@@ -14,25 +16,22 @@ export class Visit extends BaseEntity{
   patient!: string
   
   @Field()
-  @Column("text")
+  @Column("timestamp")
   time!: string
   
   @Field()
-  @Column("text")
+  @Column("integer")
   fee!: number
   
   @Field()
-  @Column("text")
+  @Column("integer")
   promoter_score!: number
   
-  @Field()
-  @Column("text")
-  clinic!: number // todo: relation
+  @OneToOne(_type => Clinic) @JoinColumn() 
+  clinic!: Clinic;
   
-  @Field()
-  @Column("text")
-  issue!: number // todo: relation
-
+  @OneToOne(_type => Issue) @JoinColumn() 
+  issue!: Issue;
 }
 
 @Resolver()
@@ -48,9 +47,19 @@ export class VisitsResolver {
       @Arg('time') time: string,
       @Arg('fee') fee: number, 
       @Arg('promoter_score') promoter_score: number,
-      @Arg('clinic') clinic: number, 
-      @Arg('issue') issue: number
+      @Arg('clinic_id') clinic_id: number, 
+      @Arg('issue_id') issue_id: number
     ){
+      
+      let clinic = await Clinic.findOne(clinic_id);
+      let issue = await Issue.findOne(issue_id);
+      if(!clinic){
+        throw new Error(`Clinic ${clinic_id} not found!`);
+      }
+      if(!issue){
+        throw new Error(`Issue ${issue_id} not found!`);
+      }
+
       return Visit.create({ patient, time, fee, promoter_score, clinic, issue }).save()
   }
 }

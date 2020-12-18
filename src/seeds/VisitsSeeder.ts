@@ -40,7 +40,7 @@ export default class VisitsSeeder implements Seeder {
         visit.time = datestamp,
         visit.fee = (Math.floor(Math.random() * 40)*50) + 500,
         visit.promoter_score = Math.floor(Math.random() * 5) + 6,
-        visit.clinicId = Math.floor(Math.random() * 6) + 1,
+        visit.clinicId = 1,
         visit.issueId = Math.floor(Math.random() * 6) + 1
         dayVisits.push(visit)
       }

@@ -3,9 +3,6 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "t
 import { Clinic } from "./Clinic";
 import { Issue } from "./Issue";
 
-import * as Faker from "faker"
-import { define } from "typeorm-seeding"
-
 
 @ObjectType()
 @Entity()
@@ -63,16 +60,3 @@ export class VisitsResolver {
       return Visit.create({ patient, time, fee, promoter_score, clinicId, issueId }).save()
   }
 }
-
-// user.factory.ts
-define(Visit, (faker: typeof Faker) => {
-  const visit = new Visit()
-  const gender = faker.random.number(1)
-  visit.patient = faker.name.firstName(gender) + ' ' + faker.name.lastName(gender)
-  visit.time = faker.date.between('2019-12-01', '2020-12-01').toDateString()
-  visit.fee = (Math.floor(Math.random() * 40)*50) + 500
-  visit.promoter_score = Math.floor(Math.random() * 5) + 6
-  visit.clinicId = Math.floor(Math.random() * 6) + 1
-  visit.issueId = Math.floor(Math.random() * 6) + 1
-  return visit
-})

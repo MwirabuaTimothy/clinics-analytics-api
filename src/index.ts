@@ -5,11 +5,12 @@ import { createConnection } from "typeorm";
 import { ClinicsResolver } from "./entities/Clinic";
 import { IssuesResolver } from "./entities/Issue";
 import { VisitsResolver } from "./entities/Visit";
+import { StaffsResolver } from "./entities/Staff";
 
 const main = async () => {
   
   const schema = await buildSchema({
-    resolvers: [ClinicsResolver, IssuesResolver, VisitsResolver]
+    resolvers: [ClinicsResolver, IssuesResolver, VisitsResolver, StaffsResolver]
   });
 
   const apolloServer = new ApolloServer({schema})

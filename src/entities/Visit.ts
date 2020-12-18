@@ -2,7 +2,7 @@ import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-grap
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Clinic } from "./Clinic";
 import { Issue } from "./Issue";
-
+import { Staff } from "./Staff";
 
 @ObjectType()
 @Entity()
@@ -39,6 +39,12 @@ export class Visit extends BaseEntity{
 
   @ManyToOne(() => Issue, issue => issue.visits) 
   issue!: Issue;
+  
+  @Column({ type: "int", nullable: true })
+  staffId!: number;
+
+  @ManyToOne(() => Staff, staff => staff.visits) 
+  staff!: Staff;
 }
 
 @Resolver()
@@ -55,8 +61,9 @@ export class VisitsResolver {
       @Arg('fee') fee: number, 
       @Arg('promoter_score') promoter_score: number,
       @Arg('clinicId') clinicId: number, 
-      @Arg('issueId') issueId: number
+      @Arg('issueId') issueId: number,
+      @Arg('staffId') staffId: number
     ){
-      return Visit.create({ patient, time, fee, promoter_score, clinicId, issueId }).save()
+      return Visit.create({ patient, time, fee, promoter_score, clinicId, issueId, staffId }).save()
   }
 }

@@ -25,22 +25,19 @@ export default class StaffsSeeder implements Seeder {
           name: "John Doe"
         },
         { 
-          name: "Tim Truston"
+          name: "Athman Doe"
         },
         { 
-          name: "Athman Gude"
+          name: "Sandra Doe"
         },
         { 
-          name: "Sandra Mamai"
+          name: "Daphne Doe"
         },
         { 
-          name: "Daphne Ngunjiri"
+          name: "Eric Doe"
         },
         { 
-          name: "Eric Mbuthia"
-        },
-        { 
-          name: "Melissa Menke"
+          name: "Melissa Doe"
         }
       ])
       .execute()

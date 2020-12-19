@@ -36,12 +36,13 @@ export default class VisitsSeeder implements Seeder {
       for (let i = 0; i <  visitsPerDay; i++) {
         const gender = Faker.random.number(1)
         const visit = new Visit()
-        visit.patient = Faker.name.firstName(gender) + ' ' + Faker.name.lastName(gender),
-        visit.time = datestamp,
-        visit.fee = (Math.floor(Math.random() * 40)*50) + 500,
-        visit.promoter_score = Math.floor(Math.random() * 5) + 6,
-        visit.clinicId = 1,
+        visit.patient = Faker.name.firstName(gender) + ' ' + Faker.name.lastName(gender)
+        visit.time = datestamp
+        visit.fee = (Math.floor(Math.random() * 40)*50) + 500
+        visit.promoter_score = Math.floor(Math.random() * 5) + 6
+        visit.clinicId = 1
         visit.issueId = Math.floor(Math.random() * 6) + 1
+        visit.staffId = Math.floor(Math.random() * 10) + 1
         dayVisits.push(visit)
       }
       visits = visits.concat(dayVisits)

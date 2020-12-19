@@ -41,6 +41,7 @@ export class Visit extends BaseEntity{
   @ManyToOne(() => Issue, issue => issue.visits) 
   issue!: Issue;
   
+  @Field()
   @Column({ type: "int", nullable: true })
   staffId!: number;
 

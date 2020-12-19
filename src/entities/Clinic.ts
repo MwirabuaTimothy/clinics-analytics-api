@@ -18,18 +18,23 @@ export class Clinic extends BaseEntity{
   @Column("text")
   location!: string
 
+  @Field(_type => [Visit])
   @OneToMany(() => Visit, visit => visit.clinic)
   visits!: Visit[]
-  
+
 }
 
 @Resolver()
 export class ClinicsResolver {
   
   @Query(()=>[Clinic])
-  async clinics(){
-    return Clinic.find();
+  async clinics(): Promise<Clinic[]> {
+    const clinics = await Clinic.find({
+      relations: ["visits"]
+    });
+    return clinics;
   }
+
   @Mutation(()=>Clinic)
   async createClinic(
       @Arg('name') name: string, 

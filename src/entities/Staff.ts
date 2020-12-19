@@ -14,6 +14,7 @@ export class Staff extends BaseEntity{
   @Column("text")
   name!: string
 
+  @Field(_type => [Visit])
   @OneToMany(() => Visit, visit => visit.staff)
   visits!: Visit[]
   
@@ -23,9 +24,13 @@ export class Staff extends BaseEntity{
 export class StaffsResolver {
   
   @Query(()=>[Staff])
-  async staffs(){
-    return Staff.find();
+  async staffs(): Promise<Staff[]> {
+    const staffs = await Staff.find({
+      relations: ["visits"]
+    });
+    return staffs;
   }
+
   @Mutation(()=>Staff)
   async createStaff(
       @Arg('name') name: string

@@ -1,6 +1,7 @@
-import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
+import { Args, Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Clinic } from "./Clinic";
+import { DefaultArgs } from "./DefaultArgs";
 import { Issue } from "./Issue";
 import { Staff } from "./Staff";
 
@@ -51,8 +52,24 @@ export class Visit extends BaseEntity{
 export class VisitsResolver {
   
   @Query(()=>[Visit])
-  async visits(){
-    return Visit.find();
+  async visits(
+    @Args() { orderBy, ascending, startIndex, endIndex }: DefaultArgs
+  ): Promise<Visit[]>{
+    
+    let args:any = {};
+
+    if (orderBy && ascending) {
+      args = {
+        ...args,
+        order: {
+          [orderBy]: ascending,
+        },
+      };
+    }
+
+    let visits = await Visit.find(args);
+
+    return visits.slice(startIndex, endIndex);
   }
   @Mutation(()=>Visit)
   async createVisit(

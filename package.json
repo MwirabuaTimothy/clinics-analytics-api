@@ -25,6 +25,7 @@
   "homepage": "https://github.com/timtruston/clinics-analytics-api#readme",
   "dependencies": {
     "apollo-server": "^2.19.0",
+    "class-validator": "^0.12.2",
     "graphql": "^15.4.0",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",

@@ -29,12 +29,14 @@ export class Visit extends BaseEntity{
   @Column("integer")
   promoter_score!: number
   
+  @Field()
   @Column({ type: "int", nullable: true })
   clinicId!: number;
   
   @ManyToOne(() => Clinic, clinic => clinic.visits) 
   clinic!: Clinic;
   
+  @Field()
   @Column({ type: "int", nullable: true })
   issueId!: number;
 
@@ -54,7 +56,7 @@ export class VisitsResolver {
   
   @Query(()=>[Visit])
   async visits(
-    @Args() { orderBy, ascending, startIndex, endIndex }: DefaultArgs
+    @Args() { orderBy, ascending, startIndex, endIndex, clinicId, issueId }: DefaultArgs
   ): Promise<Visit[]>{
     
     let args:any = {};
@@ -65,6 +67,19 @@ export class VisitsResolver {
         order: {
           [orderBy]: ascending,
         },
+      };
+    }
+    
+    if (clinicId) {
+      args = {
+        ...args,
+        where: {clinicId}
+      };
+    }
+    if (issueId) {
+      args = {
+        ...args,
+        where: {...args.where, issueId}
       };
     }
 

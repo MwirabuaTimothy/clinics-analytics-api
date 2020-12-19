@@ -1,7 +1,6 @@
 import { ArgsType, Field } from "type-graphql";
 import { Min, Max } from "class-validator";
 
-
 @ArgsType()
 export class DefaultArgs {
   @Field({ defaultValue: 0 })
@@ -22,8 +21,14 @@ export class DefaultArgs {
   @Field()
   ascending!: boolean;
 
+  // @Field({ nullable: true })
+  // match: {[key: string]: string } = {};
+  
   @Field({ nullable: true })
-  match?: string;
+  clinicId!: number;
+  
+  @Field({ nullable: true })
+  issueId!: number;
 
   // helpers - index calculations
   get startIndex(): number {

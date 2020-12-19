@@ -42,7 +42,7 @@ export default class VisitsSeeder implements Seeder {
         visit.promoter_score = Math.floor(Math.random() * 5) + 6
         visit.clinicId = 1
         visit.issueId = Math.floor(Math.random() * 6) + 1
-        visit.staffId = Math.floor(Math.random() * 10) + 1
+        visit.staffId = Math.floor(Math.random() * 3) + 1
         dayVisits.push(visit)
       }
       visits = visits.concat(dayVisits)

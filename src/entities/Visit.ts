@@ -1,5 +1,5 @@
 import { Args, Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, Between } from "typeorm";
 import { Clinic } from "./Clinic";
 import { DefaultArgs } from "./DefaultArgs";
 import { Issue } from "./Issue";
@@ -56,7 +56,7 @@ export class VisitsResolver {
   
   @Query(()=>[Visit])
   async visits(
-    @Args() { orderBy, ascending, startIndex, endIndex, clinicId, issueId }: DefaultArgs
+    @Args() { orderBy, ascending, startIndex, endIndex, clinicId, issueId, startDate, endDate }: DefaultArgs
   ): Promise<Visit[]>{
     
     let args:any = {};
@@ -80,6 +80,12 @@ export class VisitsResolver {
       args = {
         ...args,
         where: {...args.where, issueId}
+      };
+    }
+    if (startDate && endDate) {
+      args = {
+        ...args,
+        where: {...args.where, time: Between(new Date(startDate), new Date(endDate))}
       };
     }
 

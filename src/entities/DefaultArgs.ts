@@ -29,6 +29,12 @@ export class DefaultArgs {
   
   @Field({ nullable: true })
   issueId!: number;
+  
+  @Field({ nullable: true })
+  startDate!: number;
+  
+  @Field({ nullable: true })
+  endDate!: number;
 
   // helpers - index calculations
   get startIndex(): number {

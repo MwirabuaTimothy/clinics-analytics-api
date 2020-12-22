@@ -10,22 +10,28 @@ export default class IssuesSeeder implements Seeder {
       .into(Issue)
       .values([
         { 
-          name: "Wrong Prescription"
+          name: "Wrong Prescription",
+          location: "Kosovo"
         },
         { 
-          name: "Opened Late"
+          name: "Opened Late",
+          location: "Kiambiu"
         },
         { 
-          name: "Bad Receipts"
+          name: "Bad Receipts",
+          location: "New York"
         },
         { 
-          name: "Late Check In"
+          name: "Late Check In",
+          location: "Mathare"
         },
         { 
-          name: "Delay in Lab"
+          name: "Delay in Lab",
+          location: "Kiambiu"
         },
         { 
-          name: "Careless Waste Disposal"
+          name: "Careless Waste Disposal",
+          location: "Kiambiu"
         }
       ])
       .execute()

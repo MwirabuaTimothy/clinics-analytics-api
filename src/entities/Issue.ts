@@ -13,11 +13,18 @@ export class Issue extends BaseEntity{
   @Field()
   @Column("text")
   name!: string
+
+  @Field()
+  @Column("text")
+  location!: string
   
   @Field(_type => [Visit])
   @OneToMany(() => Visit, visit => visit.issue)
   visits!: Visit[]
-
+  
+  @Field()
+  visitsCount!: number
+  
 }
 
 @Resolver()
@@ -33,8 +40,9 @@ export class IssuesResolver {
 
   @Mutation(()=>Issue)
   async createIssue(
-      @Arg('name') name: string
+      @Arg('name') name: string,
+      @Arg('location') location: string
     ){
-      return Issue.create({name}).save()
+      return Issue.create({name, location}).save()
   }
 }

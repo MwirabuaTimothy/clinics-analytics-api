@@ -22,16 +22,24 @@ export class Clinic extends BaseEntity{
   @OneToMany(() => Visit, visit => visit.clinic)
   visits!: Visit[]
 
+  @Field()
+  visitsCount!: number;
 }
 
 @Resolver()
 export class ClinicsResolver {
-  
+
+
   @Query(()=>[Clinic])
   async clinics(): Promise<Clinic[]> {
     const clinics = await Clinic.find({
       relations: ["visits"]
     });
+
+    clinics.map(clinic => {
+      clinic.visitsCount = clinic.visits.length
+    })
+    
     return clinics;
   }
 

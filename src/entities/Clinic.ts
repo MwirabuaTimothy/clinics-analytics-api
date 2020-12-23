@@ -1,5 +1,5 @@
-import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Arg, Args, ArgsType, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
+import { BaseEntity, Column, Entity,  OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Visit } from "./Visit";
 
 @ObjectType()
@@ -24,6 +24,18 @@ export class Clinic extends BaseEntity{
 
   @Field()
   visitsCount!: number;
+  
+  @Field()
+  visitsTime!: number;
+}
+
+@ArgsType()
+export class DefaultArgs {
+  @Field({ nullable: true })
+  startDate!: number;
+  
+  @Field({ nullable: true })
+  endDate!: number;
 }
 
 @Resolver()
@@ -31,13 +43,27 @@ export class ClinicsResolver {
 
 
   @Query(()=>[Clinic])
-  async clinics(): Promise<Clinic[]> {
+  async clinics(
+    @Args() {startDate, endDate }: DefaultArgs
+    ): Promise<Clinic[]> {
     const clinics = await Clinic.find({
-      relations: ["visits"]
+      relations: ["visits"],
+      // join: {
+      //   alias: "clinic",
+      //   leftJoinAndSelect: {
+      //     visitTime: "clinic__visits.visits"
+      //   },
+      // },
+      // where: { clinic__visits: Between(new Date('2020-12-23'), new Date()) },
     });
 
     clinics.map(clinic => {
-      clinic.visitsCount = clinic.visits.length
+      // clinic.visitsCount = clinic.visits.length
+      clinic.visitsCount = clinic.visits.filter(visit => {
+        // return new Date(visit.time).getDate() == new Date('2020-12-23').getDate()
+        return new Date(visit.time) >= new Date(startDate)
+          && new Date(visit.time) < new Date(endDate)
+      }).length
     })
     
     return clinics;

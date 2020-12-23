@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.ts",
-    "build": "tsc --project ./tsconfig.json",
+    "build": "npx tsc src/** --outDir dist",
     "test": "jest -c ./jest.config.json",
     "test:coverage": "jest --coverage -c ./jest.config.json",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",

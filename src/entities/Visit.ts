@@ -1,7 +1,6 @@
-import { Args, Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
+import { ArgsType, Args, Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, Between } from "typeorm";
 import { Clinic } from "./Clinic";
-import { DefaultArgs } from "./DefaultArgs";
 import { Issue } from "./Issue";
 import { Staff } from "./Staff";
 
@@ -51,24 +50,30 @@ export class Visit extends BaseEntity{
   staff!: Staff;
 }
 
+@ArgsType()
+export class DefaultArgs {
+  @Field({ nullable: true })
+  clinicId!: number;
+
+  @Field({ nullable: true })
+  issueId!: number;
+
+  @Field({ nullable: true })
+  startDate!: number;
+
+  @Field({ nullable: true })
+  endDate!: number;
+}
+
 @Resolver()
 export class VisitsResolver {
   
   @Query(()=>[Visit])
   async visits(
-    @Args() { orderBy, ascending, startIndex, endIndex, clinicId, issueId, startDate, endDate }: DefaultArgs
+    @Args() { clinicId, issueId, startDate, endDate }: DefaultArgs
   ): Promise<Visit[]>{
     
     let args:any = {};
-
-    if (orderBy && ascending) {
-      args = {
-        ...args,
-        order: {
-          [orderBy]: ascending,
-        },
-      };
-    }
     
     if (clinicId) {
       args = {
@@ -91,8 +96,9 @@ export class VisitsResolver {
 
     let visits = await Visit.find(args);
 
-    return visits.slice(startIndex, endIndex);
+    return visits;
   }
+
   @Mutation(()=>Visit)
   async createVisit(
       @Arg('patient') patient: string, 

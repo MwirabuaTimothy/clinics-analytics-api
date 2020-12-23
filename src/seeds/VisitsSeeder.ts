@@ -26,28 +26,32 @@ export default class VisitsSeeder implements Seeder {
   public async run(_factory: Factory, connection: Connection): Promise<any> {
     let startDate = new Date(2019, 12, 1);
     let finalDate = new Date(2021, 1, 1);
-    let visits:any = [];
+    let visits = 0
     for (var date = startDate; date <= finalDate; date.setDate(date.getDate() + 1)) {
       let datestamp = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
-      
-      let dayVisits = [];
-    
-      let visitsPerDay =  Math.floor(Math.random() * 8) + 6
-      for (let i = 0; i <  visitsPerDay; i++) {
-        const gender = Faker.random.number(1)
-        const visit = new Visit()
-        visit.patient = Faker.name.firstName(gender) + ' ' + Faker.name.lastName(gender)
-        visit.time = datestamp
-        visit.fee = (Math.floor(Math.random() * 40)*50) + 500
-        visit.promoter_score = Math.floor(Math.random() * 5) + 6
-        visit.clinicId = 1
-        visit.issueId = Math.floor(Math.random() * 6) + 1
-        visit.staffId = Math.floor(Math.random() * 3) + 1
-        dayVisits.push(visit)
+      let dayVisits:any = [];
+      for (let clinicId = 1; clinicId <=  6; clinicId++) {
+        let visitsPerDay =  Faker.random.number({ min:8, max: 12})
+        console.log('Date:', date.getDate(), 'Clinic:', clinicId, 'visitsPerDay', visitsPerDay)
+        let dailyClinicVisits = [];
+        for (let i = 0; i <  visitsPerDay; i++) {
+          const gender = Faker.random.number(1)
+          const visit = new Visit()
+          visit.patient = Faker.name.firstName(gender) + ' ' + Faker.name.lastName(gender)
+          visit.time = datestamp
+          visit.fee = (Math.floor(Math.random() * 40)*50) + 500
+          visit.promoter_score = Faker.random.number({ min:5, max: 10})
+          visit.clinicId = clinicId
+          visit.issueId = Faker.random.number({min: 1, max: 6})
+          visit.staffId = Faker.random.number({min: 1, max: 4})
+          dailyClinicVisits.push(visit)
+        }
+        dayVisits = dayVisits.concat(dailyClinicVisits)
       }
-      visits = visits.concat(dayVisits)
+      console.log('All day visits: ', dayVisits.length)
+      await connection.manager.save(dayVisits)
+      visits += dayVisits.length
     }
-    console.log('visits.length:', visits.length)
-    await connection.manager.save(visits)
+    console.log('All visits: ', visits)
   }
 }

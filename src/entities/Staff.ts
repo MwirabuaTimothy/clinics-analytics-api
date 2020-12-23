@@ -59,13 +59,14 @@ export class StaffsResolver {
     
     // add other fields
     let rank = shuffle([1, 2, 3, 4]);
+    let opr = () => Math.floor(Math.random() * 2) ? '+' : '-'
     staffs.forEach((staff, i) => {
       staff.rank = rank[i];
       staff.efficiency = 70 + Math.floor(Math.random() * 30);
       staff.efficiency_delta1 = addComma(10 + Math.floor(Math.random() * 20));
-      staff.efficiency_delta2 = addComma(0 + Math.floor(Math.random() * 15));
+      staff.efficiency_delta2 = opr() + addComma(0 + Math.floor(Math.random() * 15));
       staff.nps_delta1 = addComma(10 + Math.floor(Math.random() * 20));
-      staff.nps_delta2 = addComma(0 + Math.floor(Math.random() * 15));
+      staff.nps_delta2 = opr() + addComma(0 + Math.floor(Math.random() * 15));
       staff.reported_issues = 1 + Math.floor(Math.random() * 9);
     });
     staffs.sort((a, b) => a['rank'] - b['rank'])

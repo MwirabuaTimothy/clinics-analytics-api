@@ -24,9 +24,7 @@ export class Clinic extends BaseEntity{
 
   @Field()
   visitsCount!: number;
-  
-  @Field()
-  visitsTime!: number;
+
 }
 
 @ArgsType()
@@ -41,11 +39,8 @@ export class DefaultArgs {
 @Resolver()
 export class ClinicsResolver {
 
-
   @Query(()=>[Clinic])
-  async clinics(
-    @Args() {startDate, endDate }: DefaultArgs
-    ): Promise<Clinic[]> {
+  async clinics(@Args() { startDate, endDate }: DefaultArgs): Promise<Clinic[]> {
     const clinics = await Clinic.find({
       relations: ["visits"],
       // join: {
@@ -58,9 +53,7 @@ export class ClinicsResolver {
     });
 
     clinics.map(clinic => {
-      // clinic.visitsCount = clinic.visits.length
       clinic.visitsCount = clinic.visits.filter(visit => {
-        // return new Date(visit.time).getDate() == new Date('2020-12-23').getDate()
         return new Date(visit.time) >= new Date(startDate)
           && new Date(visit.time) < new Date(endDate)
       }).length

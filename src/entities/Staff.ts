@@ -1,4 +1,4 @@
-import { Arg, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
+import { Arg, Args, ArgsType, Field, ID, Mutation, ObjectType, Query, Resolver } from "type-graphql";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Visit } from "./Visit";
 
@@ -35,12 +35,23 @@ export class Staff extends BaseEntity{
   
 }
 
+
+@ArgsType()
+export class DefaultArgs {
+  @Field({ nullable: true })
+  startDate!: number;
+  
+  @Field({ nullable: true })
+  endDate!: number;
+}
+
 @Resolver()
 export class StaffsResolver {
   
   @Query(()=>[Staff])
-  async staffs(): Promise<Staff[]> {
+  async staffs(@Args() { startDate, endDate }: DefaultArgs): Promise<Staff[]> {
     
+    console.log('TODO - use:', startDate, endDate)
     
     const staffs = await Staff.find({
       relations: ["visits"]
@@ -57,6 +68,7 @@ export class StaffsResolver {
       staff.nps_delta2 = addComma(0 + Math.floor(Math.random() * 15));
       staff.reported_issues = 1 + Math.floor(Math.random() * 9);
     });
+    staffs.sort((a, b) => a['rank'] - b['rank'])
 
     return staffs;
   }

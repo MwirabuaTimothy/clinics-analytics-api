@@ -7,7 +7,7 @@
     "module": "commonjs", // Specify module code generation
     "moduleResolution": "node", // Resolve modules using Node.js style
     "resolveJsonModule": true, // Include modules imported with .json extension
-    "noEmit": true, // Do not emit output (meaning do not compile code, only perform type checking)
+    "noEmit": false, // Do not emit output (meaning do not compile code, only perform type checking)
     "sourceMap": true, // Generate corrresponding .map file
     "outDir": "./dist",
     "declaration": false, // Generate corresponding .d.ts file 

@@ -1,5 +1,5 @@
 import { Factory, Seeder } from 'typeorm-seeding'
-import { Visit } from '../entities/Visit'
+import { Visit } from '../classes/Visit'
 import { Connection } from "typeorm";
 
 // import { define } from "typeorm-seeding"

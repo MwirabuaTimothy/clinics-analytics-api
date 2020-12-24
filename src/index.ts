@@ -2,10 +2,10 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import { ClinicsResolver } from "./entities/Clinic";
-import { IssuesResolver } from "./entities/Issue";
-import { VisitsResolver } from "./entities/Visit";
-import { StaffsResolver } from "./entities/Staff";
+import { ClinicsResolver } from "./classes/Clinic";
+import { IssuesResolver } from "./classes/Issue";
+import { VisitsResolver } from "./classes/Visit";
+import { StaffsResolver } from "./classes/Staff";
 
 const main = async () => {
   

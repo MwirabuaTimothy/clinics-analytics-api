@@ -1,6 +1,6 @@
 import { Factory, Seeder } from 'typeorm-seeding'
 import { Connection } from 'typeorm'
-import { Clinic } from '../entities/Clinic'
+import { Clinic } from '../classes/Clinic'
 
 export default class ClinicsSeeder implements Seeder {
   public async run(_factory: Factory, connection: Connection): Promise<any> {

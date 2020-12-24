@@ -1,6 +1,6 @@
 import { Factory, Seeder } from 'typeorm-seeding'
 import { Connection } from 'typeorm'
-import { Staff } from '../entities/Staff'
+import { Staff } from '../classes/Staff'
 
 export default class StaffsSeeder implements Seeder {
   public async run(_factory: Factory, connection: Connection): Promise<any> {

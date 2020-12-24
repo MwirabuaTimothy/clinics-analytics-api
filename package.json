@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./dist && tsc src/**",
     "start": "npm run build && node dist/index.js",
     "test": "jest -c ./jest.config.json",
     "test:coverage": "jest --coverage -c ./jest.config.json",

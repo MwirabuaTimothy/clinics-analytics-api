@@ -9,15 +9,15 @@ import { StaffsResolver } from "./classes/Staff";
 
 const main = async () => {
   
+  await createConnection().then(({options}) => {
+    console.log(`Connected to ORM database ${options.database}`);
+  })
+
   const schema = await buildSchema({
     resolvers: [ClinicsResolver, IssuesResolver, VisitsResolver, StaffsResolver]
   });
 
   const apolloServer = new ApolloServer({schema})
-
-  await createConnection().then(() => {
-    console.log('Connected to ORM')
-  })
 
   apolloServer.listen(5000).then(({url}) => {
     console.log(`Started server on port ${url}`);

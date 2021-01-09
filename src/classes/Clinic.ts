@@ -3,11 +3,11 @@ import { BaseEntity, Column, Entity,  OneToMany, PrimaryGeneratedColumn } from "
 import { Visit } from "./Visit";
 
 @ObjectType()
-@Entity()
-export class Clinic extends BaseEntity{
+@Entity() // tells typeorm that this corresponds to a db table
+export class Clinic extends BaseEntity { // BaseEntity means you can call functions on class w/o using querybuilder
 
-  @Field(()=>ID)
-  @PrimaryGeneratedColumn()
+  @Field(()=>ID) // typegraphql field / graphql type
+  @PrimaryGeneratedColumn() // db field
   id!: number
 
   @Field()
